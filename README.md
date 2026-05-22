@@ -1,14 +1,14 @@
-# deslop
+# llais
 
-Make AI writing sound human — and prove it with a number.
+**llais** is Welsh for *voice*. It makes AI writing sound human — and proves it with a number.
 
-`deslop` is two things that work together:
+Two things that work together:
 
-1. **An analyzer** (`deslop.py`) that scores any prose 0–100 on how human vs. AI-generated it reads, and points at the exact sentences giving it away. Zero dependencies. Pure Python.
+1. **An analyzer** (`llais.py`) that scores any prose 0–100 on how human vs. AI-generated it reads, and points at the exact sentences giving it away. Zero dependencies. Pure Python.
 2. **A writing skill** (`skill/`) that teaches an agent — or you — to write with an actual voice, not just avoid trigger words. Works as a [Claude Code](https://docs.claude.com/en/docs/claude-code) skill or as a plain reference.
 
 ```text
-$ python deslop.py examples/slop.md
+$ python llais.py examples/slop.md
 ────────────────────────────────────────────────────────
  Human Voice Score: 30/100  (AI slop)
 ────────────────────────────────────────────────────────
@@ -19,7 +19,7 @@ $ python deslop.py examples/slop.md
   ·  [numbers]   (line 7) tidy percentage: "80%" — real numbers are messier
   ... 23 more
 
-$ python deslop.py examples/voiced.md
+$ python llais.py examples/voiced.md
  Human Voice Score: 100/100  (human)
  No structural tells found. Read it aloud anyway.
 ```
@@ -35,26 +35,26 @@ The cause isn't vocabulary. Current models are well past "tapestry." The reason 
 - **Manufactured-precise numbers** — suspiciously round "12,000 users, 40% retention" that smell invented.
 - **Monotone rhythm** — sentences of uniform length; the auditory signature of a machine.
 
-`deslop` measures these directly. The skill fixes them at the source: take a position, write to one person, anchor every abstraction in real detail, vary the rhythm. Fix the stance and the surface tells mostly disappear on their own.
+`llais` measures these directly. The skill fixes them at the source: take a position, write to one person, anchor every abstraction in real detail, vary the rhythm. Fix the stance and the surface tells mostly disappear on their own.
 
 ## Quick start
 
 No install, no dependencies. Python 3.10+.
 
 ```bash
-git clone https://github.com/sb-arnav/deslop.git
-cd deslop
+git clone https://github.com/sb-arnav/llais.git
+cd llais
 
-python deslop.py path/to/draft.md      # full scored report
-cat draft.md | python deslop.py -      # or pipe via stdin
-python deslop.py --quiet draft.md      # just the score
-python deslop.py --json draft.md       # machine-readable
+python llais.py path/to/draft.md      # full scored report
+cat draft.md | python llais.py -      # or pipe via stdin
+python llais.py --quiet draft.md      # just the score
+python llais.py --json draft.md       # machine-readable
 ```
 
 Gate it in CI or an editing loop:
 
 ```bash
-python deslop.py --min-score 85 --quiet draft.md   # exits non-zero if below 85
+python llais.py --min-score 85 --quiet draft.md   # exits non-zero if below 85
 ```
 
 ## What the analyzer catches
@@ -79,7 +79,7 @@ Each finding includes the line number and the offending excerpt, so you fix the 
 Generic "human" is a low bar. To write as *one particular* person — you, a client, a brand — profile their writing first:
 
 ```bash
-python deslop.py --profile their_samples.md
+python llais.py --profile their_samples.md
 ```
 
 You get their fingerprint — sentence-length range and burstiness, contraction rate, reading ease, vocabulary diversity (MTLD), signature words — plus a one-line target spec to write toward. Full method in [`skill/voice-capture.md`](skill/voice-capture.md).
@@ -122,7 +122,7 @@ Findings are weighted by severity and capped per category, then subtracted from 
 ## Develop
 
 ```bash
-python -m unittest -v     # 23 tests, no dependencies
+python -m unittest -v     # 25 tests, no dependencies
 ```
 
 CI runs the suite on Python 3.10–3.12. Contributions welcome — especially new tells (with a test that fails before your fix) and better example pairs.

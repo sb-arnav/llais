@@ -68,13 +68,13 @@ Voice is constant; register changes. Quick table below; full per-format specs (l
 1. **Read it aloud.** Paul Graham's test: *would I say this to a friend?* Rewrite anything that sounds like a press release.
 2. **Run the analyzer** (ships with this repo, zero dependencies):
    ```
-   python deslop.py draft.md
+   python llais.py draft.md
    ```
    It scores the draft 0–100 and flags the exact offending spans (antithesis, aphorism, em-dash, banned vocab, manufactured numbers, monotone rhythm). Fix the highest-severity findings first, then re-run.
 3. **Loop** until the score clears your bar (≥ 85 for published work), then read aloud one more time. The number is a floor, not the goal — a 90 that sounds dead still fails the ear test.
 
 ```
-draft  →  deslop draft.md  →  fix top findings  →  re-run  →  (score ≥ 85?) → read aloud → ship
+draft  →  llais draft.md  →  fix top findings  →  re-run  →  (score ≥ 85?) → read aloud → ship
                   ↑________________________________________|  no
 ```
 
@@ -82,7 +82,7 @@ draft  →  deslop draft.md  →  fix top findings  →  re-run  →  (score ≥
 
 To match a specific person's style (yours, a client's, a brand's), profile their existing writing first:
 ```
-python deslop.py --profile their_samples.md
+python llais.py --profile their_samples.md
 ```
 It returns their fingerprint — sentence-length range and burstiness, contraction rate, reading ease, vocabulary diversity, signature words — and a one-line target spec to write toward. Full method in **`voice-capture.md`**.
 
@@ -106,4 +106,4 @@ The fix wasn't swapping words. It was killing the antithesis, dropping "pivotal/
 - `reference.md` — full banned inventory, the detection science (perplexity & burstiness), per-format rewrites, rationalization table.
 - `formats.md` — deep per-format register specs.
 - `voice-capture.md` — how to fingerprint and match a specific writer's voice.
-- `../deslop.py` — the analyzer (`deslop FILE`, `--profile`, `--json`, `--min-score`).
+- `../llais.py` — the analyzer (`llais FILE`, `--profile`, `--json`, `--min-score`).

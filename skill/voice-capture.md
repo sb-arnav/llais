@@ -23,7 +23,7 @@ Collect 300+ words the target actually wrote, in the register you're targeting (
 ## Step 2 — Profile
 
 ```
-python deslop.py --profile samples.md
+python llais.py --profile samples.md
 ```
 
 You get something like:
@@ -65,14 +65,14 @@ You get something like:
 Draft in the target voice using the spec as a constraint. Then check your draft against theirs:
 
 ```
-python deslop.py --profile your_draft.md
+python llais.py --profile your_draft.md
 ```
 
 Compare the two fingerprints. If your sentences average 12 words and theirs average 20, you're writing in your voice, not theirs. Adjust and re-profile until the numbers sit close.
 
 Then run the normal slop check so you didn't drift into tells:
 ```
-python deslop.py your_draft.md
+python llais.py your_draft.md
 ```
 
 ## What the numbers can't capture

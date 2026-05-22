@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-deslop — score prose on how human vs. AI-generated it reads, and flag the exact spans.
+llais — score prose on how human vs. AI-generated it reads, and flag the exact spans.
 
 Zero dependencies. Pure standard library. Works on any .md/.txt or stdin.
 
@@ -11,11 +11,11 @@ monotone sentence rhythm, em-dash spam, and a high-signal vocabulary — then
 points at the offending text so you can fix the cause, not the symptom.
 
 Usage:
-    deslop FILE                 # scored report for a file
-    cat FILE | deslop -         # read from stdin
-    deslop --json FILE          # machine-readable report
-    deslop --quiet FILE         # just the score line
-    deslop --profile FILE       # extract a writer's style fingerprint (voice capture)
+    llais FILE                 # scored report for a file
+    cat FILE | llais -         # read from stdin
+    llais --json FILE          # machine-readable report
+    llais --quiet FILE         # just the score line
+    llais --profile FILE       # extract a writer's style fingerprint (voice capture)
 
 See the writing skill in skill/ for how to act on the findings.
 """
@@ -642,7 +642,7 @@ def read_input(path: str) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
-        prog="deslop",
+        prog="llais",
         description="Score prose on how human vs. AI-generated it reads, and flag the spans.")
     ap.add_argument("file", nargs="?", default="-",
                     help="file to analyze, or - for stdin (default)")
@@ -657,11 +657,11 @@ def main(argv: list[str] | None = None) -> int:
     try:
         raw = read_input(args.file)
     except OSError as e:
-        print(f"deslop: cannot read {args.file}: {e}", file=sys.stderr)
+        print(f"llais: cannot read {args.file}: {e}", file=sys.stderr)
         return 2
 
     if not raw.strip():
-        print("deslop: empty input", file=sys.stderr)
+        print("llais: empty input", file=sys.stderr)
         return 2
 
     if args.profile:

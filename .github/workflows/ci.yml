@@ -18,4 +18,4 @@ jobs:
       - name: Run tests (no dependencies)
         run: python -m unittest -v
       - name: Self-check voiced example passes the gate
-        run: python deslop.py --min-score 80 --quiet examples/voiced.md
+        run: python llais.py --min-score 80 --quiet examples/voiced.md
