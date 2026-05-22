@@ -82,24 +82,34 @@ Generic "human" is a low bar. To write as *one particular* person — you, a cli
 python llais.py --profile their_samples.md
 ```
 
-You get their fingerprint — sentence-length range and burstiness, contraction rate, reading ease, vocabulary diversity (MTLD), signature words — plus a one-line target spec to write toward. Full method in [`skill/voice-capture.md`](skill/voice-capture.md).
+You get their fingerprint — sentence-length range and burstiness, contraction rate, reading ease, vocabulary diversity (MTLD), signature words — plus a one-line target spec to write toward. Full method in [`voice-capture.md`](voice-capture.md).
 
-## Using the writing skill
+## Use it as a skill (Claude Code, Cursor, any agent)
 
-The `skill/` directory is a self-contained writing system:
+This repo *is* a skill. The analyzer and the method live in one flat folder, so dropping it where your agent looks for skills just works — no setup, no API key.
 
-- [`SKILL.md`](skill/SKILL.md) — the method: build the voice, kill the tells, calibrate to format, run the ear test + analyzer loop.
-- [`reference.md`](skill/reference.md) — the full banned inventory, the detection science (perplexity & burstiness), per-format rewrites.
-- [`formats.md`](skill/formats.md) — register specs for cold email, LinkedIn, essay, marketing, technical, fiction, chat.
-- [`voice-capture.md`](skill/voice-capture.md) — fingerprinting and matching a writer's voice.
-
-**In Claude Code**, install it as a personal skill:
+**Claude Code — one command:**
 
 ```bash
-cp -r skill ~/.claude/skills/writing-with-human-voice
+git clone https://github.com/sb-arnav/llais.git ~/.claude/skills/llais
 ```
 
-It then triggers automatically whenever you write or edit prose. Other agent setups: point your system prompt at `skill/SKILL.md`.
+`SKILL.md` and `llais.py` land side by side, so when the agent runs the skill it scores your draft with zero extra steps. Then just say:
+
+> "use the llais skill to rewrite this email"
+> "run llais on this draft and fix what it flags"
+
+The skill triggers on its own whenever you write or edit prose.
+
+**Any other agent / IDE:** point your system prompt or rules file at the cloned [`SKILL.md`](SKILL.md). The analyzer is plain `python llais.py FILE` (with `--json` for parsing), runnable in any sandbox.
+
+The whole skill is five files in one folder:
+
+- [`SKILL.md`](SKILL.md) — the method: build the voice, kill the tells, calibrate to format, run the analyzer loop.
+- [`reference.md`](reference.md) — full banned inventory, detection science, per-format rewrites.
+- [`formats.md`](formats.md) — register specs for cold email, LinkedIn, essay, marketing, technical, fiction, chat.
+- [`voice-capture.md`](voice-capture.md) — fingerprinting and matching a writer's voice.
+- [`llais.py`](llais.py) — the analyzer the skill calls.
 
 ## How it works
 

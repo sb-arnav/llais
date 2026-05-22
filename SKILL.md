@@ -66,11 +66,12 @@ Voice is constant; register changes. Quick table below; full per-format specs (l
 ## Layer 4 — The ear test + the analyzer (always run before done)
 
 1. **Read it aloud.** Paul Graham's test: *would I say this to a friend?* Rewrite anything that sounds like a press release.
-2. **Run the analyzer** (ships with this repo, zero dependencies):
+2. **Run the analyzer.** `llais.py` sits in this skill's own folder — zero dependencies, no API key. Run it on the draft:
    ```
-   python llais.py draft.md
+   python llais.py draft.md          # from the skill folder
+   # or, from anywhere: python /path/to/this-skill/llais.py draft.md
    ```
-   It scores the draft 0–100 and flags the exact offending spans (antithesis, aphorism, em-dash, banned vocab, manufactured numbers, monotone rhythm). Fix the highest-severity findings first, then re-run.
+   It scores the draft 0–100 and flags the exact offending spans (antithesis, aphorism, em-dash, banned vocab, manufactured numbers, monotone rhythm). If you're an agent, add `--json` and parse the `findings` array. Fix the highest-severity findings first, then re-run.
 3. **Loop** until the score clears your bar (≥ 85 for published work), then read aloud one more time. The number is a floor, not the goal — a 90 that sounds dead still fails the ear test.
 
 ```
@@ -106,4 +107,4 @@ The fix wasn't swapping words. It was killing the antithesis, dropping "pivotal/
 - `reference.md` — full banned inventory, the detection science (perplexity & burstiness), per-format rewrites, rationalization table.
 - `formats.md` — deep per-format register specs.
 - `voice-capture.md` — how to fingerprint and match a specific writer's voice.
-- `../llais.py` — the analyzer (`llais FILE`, `--profile`, `--json`, `--min-score`).
+- `llais.py` — the analyzer, in this folder. `python llais.py FILE` (also `--profile`, `--json`, `--min-score N`).
