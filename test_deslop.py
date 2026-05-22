@@ -65,6 +65,14 @@ class TestDetectors(unittest.TestCase):
         f = deslop.detect_signposts("In conclusion, we won.")
         self.assertTrue(f)
 
+    def test_single_inflation_adverb_is_free(self):
+        f = deslop.detect_vocab("She quietly closed the door.")
+        self.assertFalse(any("inflation adverb" in x.message for x in f))
+
+    def test_clustered_adverbs_flag(self):
+        f = deslop.detect_vocab("It quietly, deeply, fundamentally changed.")
+        self.assertTrue(any("inflation adverb" in x.message for x in f))
+
 
 class TestMetrics(unittest.TestCase):
     def test_cv(self):

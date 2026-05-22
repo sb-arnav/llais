@@ -129,9 +129,14 @@ BANNED_WORDS = {
     # nouns / ornaments
     "tapestry", "realm", "ecosystem", "paradigm", "synergy", "testament",
     "treasure", "cornerstone", "beacon", "plethora", "myriad",
-    # adverbs
+}
+
+# Inflation adverbs: fine in isolation, a tell only in clusters. Flagged at
+# minor severity so they nudge rather than penalize a single legitimate use.
+INFLATION_ADVERBS = {
     "quietly", "deeply", "fundamentally", "remarkably", "notably",
-    "undoubtedly", "arguably", "essentially", "ultimately",
+    "undoubtedly", "arguably", "essentially", "ultimately", "seamlessly",
+    "truly", "simply",
 }
 
 BANNED_PHRASES = [
@@ -205,11 +210,19 @@ CONTRACTION = re.compile(r"\b\w+['’](?:s|re|ve|ll|d|t|m)\b", re.I)
 def detect_vocab(text: str) -> list[Finding]:
     out: list[Finding] = []
     low = text.lower()
+    adverb_hits = 0
     for m in _WORD.finditer(text):
         w = m.group(0).lower()
         if w in BANNED_WORDS:
             out.append(Finding("vocabulary", 2, f'high-signal AI word: "{m.group(0)}"',
                                _excerpt(text, m.start(), m.end()), _line_of(text, m.start())))
+        elif w in INFLATION_ADVERBS:
+            adverb_hits += 1
+            # Only the 2nd+ inflation adverb earns a (minor) flag — clusters are the tell.
+            if adverb_hits >= 2:
+                out.append(Finding("vocabulary", 1,
+                                   f'inflation adverb: "{m.group(0)}" (fine alone, a tell in clusters)',
+                                   _excerpt(text, m.start(), m.end()), _line_of(text, m.start())))
     for ph in BANNED_PHRASES:
         start = 0
         while True:
